@@ -62,6 +62,10 @@ Methoden:
 Grundlegende Kommunikation:
 Den Ausgang bildet die Musterlösung zur Übung03 UDP_Chat.java.
 Die Klassen Player, Croupier und CardCounter sind Abwandlungen der Grundklasse UDP_Chat.java.
+Der Croupier verwaltet den gameState(state machine) und steuert den Spielablauf.
+Die State Machine bildet auch die (optimale/vorgegebene) Strategie des Croupiers ab.
+Der Spieler basiert sein Verhalten auch anhand einer state machine, die die optimale Strategie des Spielers abbildet.
+Beide state machines müssen aufeinander abgestimmt sein, um ein korrektes Spiel zu gewährleisten.
 
 Voraussetzungen für den Start eines Spiels:
 - CardCounter muss beim Croupier registriert sein
@@ -102,3 +106,12 @@ kommunizieren kann und die Pakete so interpretiert, wie Sie das geplant haben?
   - Nachrichtenformat:
     1. Wort: Aktion (register, deal, hit, stand, evaluate, recommend, remove, stats, etc.)
     2. Wort: Parameter/Werte
+
+## Aufgabe 3
+
+
+
+## Aufgabe 4
+
+Aufgrund unterschiedlicher Implementierungen der Klassen Player, Croupier und CardCounter ist eine Kommunikation nicht möglich. Die Implementierungen müssen angepasst werden, um eine Kommunikation zu ermöglichen.
+Sollte die Zeit es zulassen, wird eine Kommunikation implementiert.

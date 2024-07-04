@@ -11,13 +11,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Croupier {
-
-    int deckCount = 6;
-    private List deck = new ArrayList<Card>();
+public class Player {
     private List hand = new ArrayList<Card>();
+    private static int balance = 1000;
 
-    private enum gameState {REGISTER, BET, WAIT, CROUPIER_TURN, PAY, NEXT_GAME}
+    private static void bet() {
+        int bet = balance / 10;
+        ClientInfo croupierInfo = clients.get("c");
+        sendLines(croupierInfo.ip, croupierInfo.port, "bet " + bet);
+        balance -= bet;
+        System.out.println("Bet " + bet + "€");
+        System.out.println("Balance: " + balance + "€");
+    }
+
 
     private static int port;
     private static String name;
@@ -39,6 +45,7 @@ public class Croupier {
         System.out.println(name + " (Port: " + port + ") is here, looking around.\nUse \"register <ip address> <port number>\" to contact another client.\nUse \"send <registered client name> <message>\" to message them.\nUse \"quit\" to exit program.");
         // Start a new thread to listen for messages
         new Thread(() -> receiveLines(port)).start();
+
 
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) { // closes automatically
             String input;
@@ -65,6 +72,7 @@ public class Croupier {
         }
         System.exit(0);
     }
+
 
     private record ClientInfo(String ip, int port) { }
 
@@ -115,6 +123,10 @@ public class Croupier {
                     } else {
                         System.err.println("Cannot register \"" + name + "\" because of invalid information.");
                     }
+                } else if (line.equalsIgnoreCase("bet")) {
+                    System.out.println("asked to bet");
+                    System.out.println(clients);
+                    bet();
                 }
                 System.out.println(line);
             } while (!line.equalsIgnoreCase("quit"));
@@ -138,7 +150,7 @@ public class Croupier {
     private static void register(String friend, int friends_port) {
         try {
             String ip = InetAddress.getLocalHost().getHostAddress();
-            String message = String.format("Hello, this is %s, my IPv4 address is %s, my port number is %d, and I am thrilled to talk to you.", name, ip, Croupier.port);
+            String message = String.format("Hello, this is %s, my IPv4 address is %s, my port number is %d, and I am thrilled to talk to you.", name, ip, Player.port);
             sendLines(friend, friends_port, message);
         } catch (UnknownHostException e) {
             System.err.println("Unable to find client \"" + friend + "\".");
