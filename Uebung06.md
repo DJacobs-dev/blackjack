@@ -162,8 +162,12 @@ Weitere offene Ports:
 49000/tcp open  matahari
 ...
 
+### Aufgabe 4
 
+Erstelle zunächst eine Matrix und merk dir die Distanzen zu deinen direkten Nachbarn.
+Gbi die Informationen an die anderen Routern weiter und hol dir deren Informationen ein.
+Integriere die Informationen der anderen Router in deine Matrix bis sich keine Veränderungen mehr ergeben und terminiere.
 
-
-
+Beim Link-State-Verfahren kennt jeder Router die gesamte Topologie des Netzwerks, also den kompletten Graphen mit dazu gehörigner Distanzinformation.
+Jeder Router berechnet dann den kürzesten Weg zu allen anderen Routern im Netzwerk. Beim Distanzvektor-Verfahren kennt jeder Router nur die Distanzen zu seinen direkten Nachbarn und gibt diese Informationen an seine Nachbarn weiter.
 
